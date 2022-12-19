@@ -14,7 +14,7 @@
 
 ```kcdev apply -f message_queue/rabbitmq_deployment.yaml```
 
-```kcdev apply -f message_queue/rabbitmq_deployment.yaml```
+```kcdev apply -f message_queue/rabbitmq_service.yaml```
 
 ```kcdev apply -f redis/redis_pv.yaml```
 

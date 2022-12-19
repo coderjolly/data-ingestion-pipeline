@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: elasticsearch
+  template:
+    metadata:
+      labels:
+        component: elasticsearch
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: elasticsearch-pv-claim
+        - name: logs
+          emptyDir: {}
+      containers:
+        - name: elasticsearch
+          image: elasticsearch:8.5.1
+          ports:
+            - containerPort: 9200
+          volumeMounts:
+            - name: data
+              mountPath: /usr/share/elasticsearch/data
+            - name: logs
+              mountPath: /usr/share/elasticsearch/logs
+          env:
+            - name: discovery.type
+              value: single-node
+            - name: bootstrap.memory_lock
+              value: 'true'
+            - name: ES_JAVA_OPTS
+              value: '-server -Xss1024K -Xmx2G'
+            - name: TAKE_FILE_OWNERSHIP
+              value: 'true'

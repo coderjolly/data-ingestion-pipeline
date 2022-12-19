@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: async-backend
+  labels:
+    app: async-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: async-backend
+  template:
+    metadata:
+      labels:
+        component: async-backend
+    spec:
+      volumes:
+        - name: tmp-database
+          emptyDir: { }
+      containers:
+        - name: async-backend
+          image: localhost:32000/async_backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - mountPath: /data
+              name: tmp-database
+          env:
+            - name: DATABASE_DIR
+              value: /data
+            - name: CELERY_BROKER_URL
+              value: "amqp://guest:guest@rabbitmq-service:5672"
+            - name: CELERY_RESULT_BACKEND
+              value: "rpc://"
+            - name: ES_USERNAME
+              value: "elastic"
+            - name: ES_PASSWORD
+              value: "G7DCPRb+lL8Ata5gsuF7"

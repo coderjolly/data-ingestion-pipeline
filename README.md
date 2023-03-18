@@ -61,3 +61,6 @@ Using port forwarding to render the results on a Flask application, I am able to
 For quering the Steam Reviews for exploration, relevant columns are extracted such as language of review, the review itself, game name and whether it is recommended or not. In the figure below, the process ids are seen on a scaffoled flask template.
 
 ![queryresult](/figures/queryresult.png)
+
+## Credits
+- [Shlok Walia](https://github.com/coderhyno)

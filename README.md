@@ -8,9 +8,9 @@ Whenever dealing with Kubernetes, one can use `micr8s` or `minikube` for kuberne
 
 ## Installation
 Simply following the canonical documentation, one can get started with kubernetes installation by using these commands:
-- sudo snap install microk8s –classic
-- microk8s status –wait-ready
-- microk8s enable dashboard dns registry istio
+- `sudo snap install microk8s –classic`
+- `microk8s status –wait-ready`
+- `microk8s enable dashboard dns registry istio`
 
 There are a few python based dependies which can be installed
 using: `pip3 install -r requirements.txt` for the following directories:

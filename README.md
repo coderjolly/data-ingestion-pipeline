@@ -113,4 +113,4 @@ For quering the Steam Reviews for exploration, relevant columns are extracted su
 ## Acknowledgements & Feedback
 [Shlok Walia](https://github.com/coderhyno)
   
-`I would love to receive  any feedback or suggestions for this writing. It has been written as per my understanding and the learnings I kindled during my journey in this project. I would like to express my gratitude to Shlok Walia in helping me out and being a constant guide throughtout this project. I hope you find it useful and easy to understand.`
+I would love to receive  any feedback or suggestions for this repo. It has been written as per my understanding and the learnings I kindled during my journey in this project. I would like to express my gratitude to Shlok Walia in helping me out and being a constant guide throughtout this project. I hope you find it useful and easy to understand.

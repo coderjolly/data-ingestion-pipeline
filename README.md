@@ -4,7 +4,7 @@ Gaming industry is currently one of the most prominent industries in the market.
 ## Architecture
 The system uses an asynchronous Flask backend which has been deployed as a service interacting using ScyllaDB/sQLite for storing processes followed by an event driven message queue controlled by RabbitMQ. This message queue is also deployed as a service with an interconnection with celery workers capable of horizontal pod scaling continuously integrating with Elasticsearch and Redis for data ingestion and data caching. The architecture of the project is shown in the figure below which is a representation of the data pipeline.
 
-![architecture](/figures/architecture.png)
+![architecture](/figures/architecture1.png)
 
 The directory structure of the project is shown in the figure below which is a representation of the data pipeline and can be found in the repo.
 

@@ -1,54 +1,52 @@
 ## Steamgestion - A Data Ingestion Pipeline
 Gaming industry is currently one of the most prominent industries in the market. The development and popularity of games has been increasing rapidly in the past decade. Of all the factors that determine the popularity of a game, reviews are paramount importance. As the online gaming community expands with the passing day, there is more data to be collected from the user’s database. This project aims to analyse [Steam reviews](https://www.kaggle.com/datasets/najzeko/steam-reviews-2021) dataset and build a data ingestion pipeline using Kubernetes and Docker. The data is ingested from the Steam Reviews dataset which is then cached in Redis and then stored in Elasticsearch. The data is then queried from Elasticsearch and then rendered on a Flask application.
 
+## Directory Structure
+```
+── async_backend/              <- Asynchronous backend service for the data ingestion pipeline.
+│   ├── Dockerfile              <- Dockerfile for building the backend service container.
+│   ├── __init__.py             <- Initialization script for the backend service module.
+│   ├── database.py             <- Script for database operations.
+│   ├── deployment_config/      <- Configuration files for deployment.
+│   │   ├── deployment.yaml     <- Kubernetes deployment configuration.
+│   │   └── service.yaml        <- Kubernetes service configuration.
+│   ├── main.py                 <- Main script for the backend service.
+│   ├── requirements.txt        <- File listing dependencies for the backend service.
+│   ├── settings.py             <- Configuration settings for the backend service.
+│   ├── static/                 <- Static files for the backend service.
+│   │   ├── main.css            <- CSS file for styling.
+│   │   ├── main.js             <- JavaScript file for frontend interaction.
+│   │   └── reviews.js          <- JavaScript file for handling reviews.
+│   ├── tasks.py                <- Script defining background tasks.
+│   └── templates/              <- HTML templates for the backend service.
+│       ├── index.html          <- Template for the main page.
+│       └── show.html           <- Template for showing data.
+├── celery_app/                 <- Celery application for the data ingestion pipeline.
+│   ├── Dockerfile              <- Dockerfile for building the Celery application container.
+│   ├── celery-hpa.yaml         <- Kubernetes Horizontal Pod Autoscaler configuration for Celery.
+│   ├── deployment.yaml         <- Kubernetes deployment configuration for Celery.
+│   ├── main.py                 <- Main script for the Celery application.
+│   └── requirements.txt        <- File listing dependencies for the Celery application.
+└── ingestion_engine/           <- Engine for data ingestion.
+    ├── ingestion_engine.py     <- Script for the data ingestion engine.
+    └── requirements.txt        <- File listing dependencies for the ingestion engine.
+```
+
 ## Architecture
 The system uses an asynchronous Flask backend which has been deployed as a service interacting using ScyllaDB/sQLite for storing processes followed by an event driven message queue controlled by RabbitMQ. This message queue is also deployed as a service with an interconnection with celery workers capable of horizontal pod scaling continuously integrating with Elasticsearch and Redis for data ingestion and data caching. The architecture of the project is shown in the figure below which is a representation of the data pipeline.
 
 ![architecture](/figures/architecture1.png)
 
-The directory structure of the project is shown in the figure below which is a representation of the data pipeline and can be found in the repo.
-
-![directory-structure](/figures/directory-structure.jpg)
-
 ## Installation
-henever dealing with Kubernetes, one can use `micr8s` or `minikube` for kubernetes installation on the base system. MicroK8s is the easiest and fastest way to get Kubernetes up and running. High availability in a Kubernetes cluster, is one of the premiere qualities one should look for when dealing with clusters so as to withstand a failure on any component and continue serving workloads without interruption, therefore the following three factors are necessary for a Highly Available Kubernetes cluster and micro8s serves them all. Simply following the canonical documentation, one can get started with kubernetes installation by using these commands:
+Whenever dealing with Kubernetes, one can use `micr8s` or `minikube` for kubernetes installation on the base system. MicroK8s is the easiest and fastest way to get Kubernetes up and running. High availability in a Kubernetes cluster, is one of the premiere qualities one should look for when dealing with clusters so as to withstand a failure on any component and continue serving workloads without interruption, therefore the following three factors are necessary for a Highly Available Kubernetes cluster and micro8s serves them all. Simply following the canonical documentation, one can get started with kubernetes installation by using these commands:
 ```bash
 - sudo snap install microk8s –classic
 - microk8s status –wait-ready
 - microk8s enable dashboard dns registry istio
 ```
 
-There are a few python based dependies which can be installed using: `pip3 install -r requirements.txt` under the `async_backend`, `celery_app` and `ingestion_engine` directories. These directories have their respective `requirements.txt` files as shown in the `tree` structure below:
-```zsh
-➜  data-ingestion-pipeline git:(main) ✗ tree
-├── async_backend
-│   ├── Dockerfile
-│   ├── __init__.py
-│   ├── database.py
-│   ├── deployment_config
-│   │   ├── deployment.yaml
-│   │   └── service.yaml
-│   ├── main.py
-│   ├── requirements.txt
-│   ├── settings.py
-│   ├── static
-│   │   ├── main.css
-│   │   ├── main.js
-│   │   └── reviews.js
-│   ├── tasks.py
-│   └── templates
-│       ├── index.html
-│       └── show.html
-├── celery_app
-│   ├── Dockerfile
-│   ├── celery-hpa.yaml
-│   ├── deployment.yaml
-│   ├── main.py
-│   └── requirements.txt
-└── ingestion_engine
-    ├── ingestion_engine.py
-    └── requirements.txt
-```
+There are a few python based dependies which can be installed using: `pip3 install -r requirements.txt` under the `async_backend`, `celery_app` and `ingestion_engine` directories. These directories have their respective `requirements.txt` files, 
+- so one needs to install all of them by their respective environment manager, either `virtualenv` or `conda`.
 
 Aliasing of `microk8s kubectl` to `kcdev` is also done for using kubernetes as a short form for convenience which can be done by adding an alias in the bashrc/zshrc profile which can be done by:
 ```zsh

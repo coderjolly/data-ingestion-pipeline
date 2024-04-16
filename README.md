@@ -1,4 +1,4 @@
-## Steamgestion - A Data Ingestion Pipeline
+# Steamgestion - Data Ingestion Pipeline for Large Datasets
 Gaming industry is currently one of the most prominent industries in the market. The development and popularity of games has been increasing rapidly in the past decade. Of all the factors that determine the popularity of a game, reviews are paramount importance. As the online gaming community expands with the passing day, there is more data to be collected from the user’s database. This project aims to analyse [Steam reviews](https://www.kaggle.com/datasets/najzeko/steam-reviews-2021) dataset and build a data ingestion pipeline using Kubernetes and Docker. The data is ingested from the Steam Reviews dataset which is then cached in Redis and then stored in Elasticsearch. The data is then queried from Elasticsearch and then rendered on a Flask application.
 
 ## Directory Structure
